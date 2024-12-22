@@ -8,7 +8,7 @@ HELM_VERSION="v3.9.0" # Set Helm version to install
 
 # Helper function to print usage
 usage() {
-    echo "Usage: $0 [command]"
+    echo "Usage: $0 [Use the below commands subsequently to connect the cluster and create a deployment with scaling enabled.]"
     echo "Commands:"
     echo "  start-minikube                 - Start the Minikube cluster."
     echo "  connect                        - Connect kubectl to the Minikube cluster, install tools, and verify setup."
