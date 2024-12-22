@@ -1,4 +1,4 @@
-'''Prerequisites:'''
+**Prerequisites:**
 
 Docker
   Client: Version: 27.3.1
@@ -15,7 +15,7 @@ Metric server installed.
   
 Helm : version : v3.9.0 → This will be installed if the cluster does not have one. This will be compatible with charts like KEDA.
 
-Here’s a brief overview of the design choices made during the implementation of the script:
+**Here’s a brief overview of the design choices made during the implementation of the script:**
 1. Modular Design
     The script is organized into modular functions, each addressing a specific task:
       a. start_minikube handles the Minikube initialization.
