@@ -1,13 +1,18 @@
 Prerequisites:
+
 Docker
   Client: Version: 27.3.1
+  
 K8s cluster (Minikube) version : Minikube version: v1.34.0
+
 Kubectl cli 
   Client Version: v1.31.0
   Kustomize Version: v5.4.2
   Server Version: v1.31.0
+  
 Metric server installed. 
   wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml -O metrics-server-components.yaml
+  
 Helm : version : v3.9.0 → This will be installed if the cluster does not have one. This will be compatible with charts like KEDA.
 
 Here’s a brief overview of the design choices made during the implementation of the script:
