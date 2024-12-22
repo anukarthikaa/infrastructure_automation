@@ -1,45 +1,84 @@
-**Prerequisites:**
+# Kubernetes Automation Script
 
-1.Docker Client Version: 27.3.1
-  
-2.K8s cluster (Minikube) version : Minikube version: v1.34.0
+This script automates the setup and configuration of a Kubernetes cluster, including deployment scaling using KEDA. Below are the prerequisites and a detailed explanation of the design choices made for the script implementation.
 
-3.Kubectl cli 
-    Client Version: v1.31.0
-    Kustomize Version: v5.4.2
-    Server Version: v1.31.0
-  
-4.Metric server installed. 
-    [metric-server-manifest](wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml -O metrics-server-components.yaml)
-  
-5.Helm Version : v3.9.0 
-    This will be installed if the cluster does not have one. This will be compatible with charts like KEDA.
+## Prerequisites
 
-**Here’s a brief overview of the design choices made during the implementation of the script:**
-**1. Modular Design**
-    The script is organized into modular functions, each addressing a specific task:
-      a. **_start_minikube_** handles the Minikube initialization.
-      b. **_install_helm_** ensures Helm is available.
-      c. **_connect_and_setup_cluster_** integrates multiple setup steps (e.g., connecting kubectl, validating tools, and installing KEDA).
-      d. **_create_deployment_** creates Kubernetes deployments, including scaling configurations.
-      e. **_get_health_status_** retrieves the deployment's health and resource usage.
-    This approach ensures clarity, reusability, and maintainability.
-**2. Error Handling and Feedback**
-    a. Each step includes error handling **_(if [ $? -ne 0 ] checks)_** and provides clear feedback to the user.
-    b. Exit codes are used to terminate the script in case of critical failures, ensuring subsequent steps are not executed in an invalid state.
-**3. Tool Installation and Validation**
-    a. The script checks for the presence of required tools **_(kubectl, helm, minikube)_** and installs them if necessary.
-    b. The inclusion of validation ensures that the cluster environment is correctly configured before moving forward.
-**4. Automation with Scalability in Mind**
-    a. Helm is used for installing and managing KEDA, simplifying deployment and upgrades.
-    b. Kubernetes YAML manifests are generated dynamically for deployments, services, and KEDA scaling objects, making the script adaptable to different use cases.
-**5. User-Friendly Interaction**
-    a. A usage function provides clear guidance on how to use the script and its commands.
-    b. Arguments are validated for functions like **_create_deployment_**, ensuring users provide all necessary parameters.
-**6. Built-in Scaling with KEDA**
-    a. KEDA scaling configurations (e.g., Kafka triggers, lag thresholds) are included as part of the deployment process, demonstrating a focus on event-driven scaling for workloads.
-**7. Detailed Setup Verification**
-    a. The script outputs cluster and tool information to help users verify the setup.
-    b. KEDA operator and deployment statuses are checked to ensure successful installation and operation.
+Ensure the following tools and versions are installed before running the script:
 
+1. **Docker Client**
+   - Version: `27.3.1`
 
+2. **Kubernetes Cluster (Minikube)**
+   - Minikube Version: `v1.34.0`
+
+3. **Kubectl CLI**
+   - Client Version: `v1.31.0`
+   - Kustomize Version: `v5.4.2`
+   - Server Version: `v1.31.0`
+
+4. **Metric Server**
+   - Installed using the following manifest:
+     ```bash
+     wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml -O metrics-server-components.yaml
+     ```
+
+5. **Helm**
+   - Version: `v3.9.0` 
+   - If Helm is not installed, the script will install it. Compatible with charts like KEDA.
+
+---
+
+## Design Overview
+
+### 1. Modular Design
+The script is organized into modular functions for better clarity, reusability, and maintainability:
+- **`start_minikube`**: Initializes Minikube.
+- **`install_helm`**: Ensures Helm is available.
+- **`connect_and_setup_cluster`**: Integrates multiple setup steps (e.g., connecting kubectl, validating tools, and installing KEDA).
+- **`create_deployment`**: Creates Kubernetes deployments, including scaling configurations.
+- **`get_health_status`**: Retrieves the deployment's health and resource usage.
+
+---
+
+### 2. Error Handling and Feedback
+- Critical steps include error handling with `if [ $? -ne 0 ]` checks to ensure proper execution.
+- The script terminates with appropriate exit codes on critical failures, preventing subsequent steps from running in an invalid state.
+
+---
+
+### 3. Tool Installation and Validation
+- Checks for required tools (`kubectl`, `helm`, `minikube`) and installs them if not found.
+- Validates the cluster environment before proceeding.
+
+---
+
+### 4. Automation with Scalability in Mind
+- Uses Helm for installing and managing KEDA, simplifying deployment and upgrades.
+- Dynamically generates Kubernetes YAML manifests for deployments, services, and KEDA scaling objects, making it adaptable to various use cases.
+
+---
+
+### 5. User-Friendly Interaction
+- Includes a usage function to guide users on script commands.
+- Validates arguments for functions like `create_deployment`, ensuring all necessary parameters are provided.
+
+---
+
+### 6. Built-In Scaling with KEDA
+- Incorporates KEDA scaling configurations (e.g., Kafka triggers, lag thresholds) as part of the deployment process.
+- Focuses on event-driven scaling for workloads.
+
+---
+
+### 7. Detailed Setup Verification
+- Outputs cluster and tool information for verification.
+- Checks the status of the KEDA operator and deployments to ensure successful installation and operation.
+
+---
+
+## Usage
+
+1. Clone this repository.
+2. Execute the script with appropriate arguments.
+3. Follow the user feedback provided by the script to complete the setup.
